@@ -1,0 +1,1 @@
+{"version":3,"file":"index-CTLdb14C.js","sources":["../../src/pages/flash-man/contents/ContentsPage.tsx"],"sourcesContent":["import { ContentView } from '../components'\n\nexport function ContentsPage() {\n  return <ContentView />\n}\n"],"names":[],"mappings":";;;;;;;;;;;;;;AAEO,SAAS,eAAe;AAC7B,+CAAQ,aAAA,EAAY;AACtB;"}

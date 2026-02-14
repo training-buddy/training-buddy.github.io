@@ -1,0 +1,1 @@
+{"version":3,"file":"index-CuU2Hw4t.js","sources":["../../src/pages/flash-man/cards/CardsPage.tsx"],"sourcesContent":["import { FlashCardView } from '../components'\n\nexport function CardsPage() {\n  return <FlashCardView />\n}\n"],"names":[],"mappings":";;;;;;;;;;;;;;AAEO,SAAS,YAAY;AAC1B,+CAAQ,eAAA,EAAc;AACxB;"}

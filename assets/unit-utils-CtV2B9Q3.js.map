@@ -1,0 +1,1 @@
+{"version":3,"file":"unit-utils-CtV2B9Q3.js","sources":["../../src/utils/unit-utils.ts"],"sourcesContent":["export function renderUnit(unit: string) {\n  if (unit.startsWith('fm://')) {\n    return 'fm'\n  }\n  return unit\n}\n"],"names":[],"mappings":"AAAO,SAAS,WAAW,MAAc;AACvC,MAAI,KAAK,WAAW,OAAO,GAAG;AAC5B,WAAO;AAAA,EACT;AACA,SAAO;AACT;"}

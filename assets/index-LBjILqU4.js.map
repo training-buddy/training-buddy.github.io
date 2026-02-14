@@ -1,0 +1,1 @@
+{"version":3,"file":"index-LBjILqU4.js","sources":["../../src/pages/flash-man/learn/one-from-many/OneFromManyPage.tsx"],"sourcesContent":["import { OneFromManyView } from '../../components'\n\nexport function OneFromManyPage() {\n  return <OneFromManyView />\n}\n"],"names":[],"mappings":";;;;;;;;;;;;;;AAEO,SAAS,kBAAkB;AAChC,+CAAQ,iBAAA,EAAgB;AAC1B;"}

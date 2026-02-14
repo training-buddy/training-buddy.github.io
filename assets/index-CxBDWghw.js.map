@@ -1,0 +1,1 @@
+{"version":3,"file":"index-CxBDWghw.js","sources":["../../src/pages/flash-man/learn/short-answer/ShortAnswerPage.tsx"],"sourcesContent":["import { ShortAnswerView } from '../../components'\n\nexport function ShortAnswerPage() {\n  return <ShortAnswerView />\n}\n"],"names":[],"mappings":";;;;;;;;;;;;;;AAEO,SAAS,kBAAkB;AAChC,+CAAQ,iBAAA,EAAgB;AAC1B;"}

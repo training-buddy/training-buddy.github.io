@@ -1,0 +1,1 @@
+{"version":3,"file":"index-BAsOCF8D.js","sources":["../../src/pages/flash-man/learn/LearnPage.tsx"],"sourcesContent":["import { LearnConfigEntry } from '../components'\n\nexport function LearnPage() {\n  return <LearnConfigEntry />\n}\n"],"names":[],"mappings":";;;;;;;;;;;;;;AAEO,SAAS,YAAY;AAC1B,+CAAQ,kBAAA,EAAiB;AAC3B;"}
