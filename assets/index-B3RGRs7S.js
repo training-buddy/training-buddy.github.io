@@ -1,0 +1,303 @@
+import { k as createSvgIcon, j as jsxRuntimeExports, r as reactExports, P as Paper, I as IconButton, T as Typography, B as Box, u as useAuth, C as CircularProgress, A as Alert, l as formatDuration, g as Button, i as Link, b as routes } from "./index-CvRd15Ij.js";
+import { b as getTrainingExecutions, c as getTrainingExecutionsByPlanId, e as calculateStats } from "./trainingExecutions-CwyzMcCF.js";
+import { g as getTrainingPlans } from "./trainingPlans-JsHeONct.js";
+import { t as toLocalDateKey, i as isoToLocalDateKey } from "./date-5ZZ1N3rr.js";
+import { S as Stack } from "./Stack-BzwgLADh.js";
+import { C as ChevronRightIcon, G as Grid } from "./ChevronRight-6bJXBQ4O.js";
+import { P as PlanExecutionButton } from "./PlanExecutionButton-CgJaqyFD.js";
+import { b as calculateTotalSessions } from "./schedule-BIUys4DM.js";
+import { C as Container } from "./Container-C-hUz_R3.js";
+import { C as Card, a as CardContent } from "./CardContent-BdV-PfcG.js";
+import { L as LinearProgress } from "./LinearProgress-BbMDJCs_.js";
+import { C as CardActions } from "./CardActions-BwB6Y3dL.js";
+import "./useThemeProps-Jyxa4FFG.js";
+import "./FolderOpen-C6mWd005.js";
+const PrevIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+}));
+const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
+function Calendar({ markedDates, onDateClick }) {
+  const [currentMonth, setCurrentMonth] = reactExports.useState(() => {
+    const now = /* @__PURE__ */ new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1);
+  });
+  const year = currentMonth.getFullYear();
+  const month = currentMonth.getMonth();
+  const firstDayOfMonth = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const prevMonth = () => {
+    setCurrentMonth(new Date(year, month - 1, 1));
+  };
+  const nextMonth = () => {
+    setCurrentMonth(new Date(year, month + 1, 1));
+  };
+  const days = [];
+  for (let i = 0; i < firstDayOfMonth; i++) {
+    days.push(null);
+  }
+  for (let i = 1; i <= daysInMonth; i++) {
+    days.push(i);
+  }
+  const today = /* @__PURE__ */ new Date();
+  const isToday = (day) => today.getFullYear() === year && today.getMonth() === month && today.getDate() === day;
+  const getDateKey = (day) => toLocalDateKey(new Date(year, month, day));
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Paper, { sx: { p: 2 }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Stack, { direction: "row", justifyContent: "space-between", alignItems: "center", sx: { mb: 2 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton, { onClick: prevMonth, size: "small", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PrevIcon, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Typography, { variant: "h6", children: [
+        year,
+        "년 ",
+        month + 1,
+        "월"
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton, { onClick: nextMonth, size: "small", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRightIcon, {}) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Box,
+      {
+        sx: {
+          display: "grid",
+          gridTemplateColumns: "repeat(7, 1fr)",
+          gap: 0.5,
+          mb: 1
+        },
+        children: WEEKDAYS.map((day, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Typography,
+          {
+            variant: "caption",
+            align: "center",
+            sx: {
+              color: index === 0 ? "error.main" : index === 6 ? "primary.main" : "text.secondary",
+              fontWeight: "bold"
+            },
+            children: day
+          },
+          day
+        ))
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Box,
+      {
+        sx: {
+          display: "grid",
+          gridTemplateColumns: "repeat(7, 1fr)",
+          gap: 0.5
+        },
+        children: days.map((day, index) => {
+          if (day === null) {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(Box, { sx: { aspectRatio: "1" } }, `empty-${index}`);
+          }
+          const dateKey = getDateKey(day);
+          const marked = markedDates.get(dateKey);
+          const dayOfWeek = (firstDayOfMonth + day - 1) % 7;
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            Box,
+            {
+              onClick: () => onDateClick?.(new Date(year, month, day)),
+              sx: {
+                aspectRatio: "1",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 1,
+                cursor: onDateClick ? "pointer" : "default",
+                bgcolor: isToday(day) ? "primary.light" : marked ? "success.light" : "transparent",
+                color: dayOfWeek === 0 ? "error.main" : dayOfWeek === 6 ? "primary.main" : "text.primary",
+                "&:hover": onDateClick ? {
+                  bgcolor: isToday(day) ? "primary.main" : marked ? "success.main" : "action.hover"
+                } : {}
+              },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { variant: "body2", children: day }),
+                marked && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  Box,
+                  {
+                    sx: {
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      bgcolor: marked.color ?? "success.dark",
+                      mt: 0.25
+                    },
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      Typography,
+                      {
+                        variant: "caption",
+                        sx: {
+                          color: "white",
+                          fontSize: "0.5rem",
+                          position: "absolute",
+                          transform: "translateY(-50%)"
+                        },
+                        children: marked.count
+                      }
+                    )
+                  }
+                )
+              ]
+            },
+            day
+          );
+        })
+      }
+    )
+  ] });
+}
+function DashboardPage() {
+  const { user } = useAuth();
+  const [plans, setPlans] = reactExports.useState([]);
+  const [executions, setExecutions] = reactExports.useState([]);
+  const [loading, setLoading] = reactExports.useState(true);
+  const [error, setError] = reactExports.useState(null);
+  const loadData = reactExports.useCallback(async () => {
+    try {
+      setLoading(true);
+      const userId = user?.id;
+      const [plansData, executionsData] = await Promise.all([
+        getTrainingPlans(userId),
+        getTrainingExecutions(userId)
+      ]);
+      const plansWithProgress = await Promise.all(
+        plansData.map(async (plan) => {
+          const planExecutions = await getTrainingExecutionsByPlanId(plan.id, userId);
+          const completedSessions = planExecutions.length;
+          const totalSessions = calculateTotalSessions(plan);
+          const progressPercent = Math.min(100, completedSessions / totalSessions * 100);
+          return {
+            ...plan,
+            completedSessions,
+            totalSessions,
+            progressPercent
+          };
+        })
+      );
+      setPlans(plansWithProgress);
+      setExecutions(executionsData);
+    } catch (err) {
+      setError("데이터를 불러오는데 실패했습니다.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [user?.id]);
+  reactExports.useEffect(() => {
+    if (user) {
+      loadData();
+    }
+  }, [user, loadData]);
+  if (loading) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Container, { maxWidth: "md", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box, { sx: { display: "flex", justifyContent: "center", py: 8 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(CircularProgress, {}) }) });
+  }
+  if (error) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Container, { maxWidth: "md", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box, { sx: { mt: { xs: 2, sm: 4 }, pb: 10 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Alert, { severity: "error", children: error }) }) });
+  }
+  const markedDates = /* @__PURE__ */ new Map();
+  executions.forEach((execution) => {
+    const dateKey = isoToLocalDateKey(execution.completed_at);
+    const existing = markedDates.get(dateKey);
+    markedDates.set(dateKey, { count: (existing?.count ?? 0) + 1 });
+  });
+  const stats = calculateStats(executions);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Container, { maxWidth: "md", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Box, { sx: { mt: { xs: 2, sm: 4 }, pb: 10 }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { variant: "h5", component: "h1", gutterBottom: true, children: "대시보드" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Grid, { container: true, spacing: { xs: 2, sm: 3 }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Grid, { size: { xs: 12, md: 6 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { variant: "h6", gutterBottom: true, children: "훈련 기록" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Calendar, { markedDates })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Grid, { size: { xs: 12, md: 6 }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { variant: "h6", gutterBottom: true, children: "통계" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Paper, { sx: { p: 2 }, children: executions.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { color: "text.secondary", children: "아직 훈련 기록이 없습니다." }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(Stack, { spacing: 2, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(StatItem, { label: "총 훈련 횟수", value: `${stats.totalSessions}회` }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            StatItem,
+            {
+              label: "평균 훈련 시간",
+              value: formatDuration(Math.round(stats.avgDuration))
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            StatItem,
+            {
+              label: "단위당 평균 시간",
+              value: formatDuration(Math.round(stats.avgDurationPerUnit))
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(StatItem, { label: "총 훈련 시간", value: formatDuration(stats.totalDuration) })
+        ] }) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Grid, { size: 12, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { variant: "h6", gutterBottom: true, sx: { mt: 2 }, children: "훈련 계획 진행률" }),
+        plans.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(Alert, { severity: "info", children: [
+          "훈련 계획이 없습니다.",
+          " ",
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { component: Link, to: routes.plans.new.$(), size: "small", children: "계획 만들기" })
+        ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Stack, { spacing: 2, children: plans.map((plan) => /* @__PURE__ */ jsxRuntimeExports.jsx(PlanProgressCard, { plan }, plan.id)) })
+      ] })
+    ] })
+  ] }) });
+}
+function StatItem({ label, value }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    Box,
+    {
+      sx: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
+      },
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { color: "text.secondary", children: label }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { variant: "h6", children: value })
+      ]
+    }
+  );
+}
+function PlanProgressCard({ plan }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        Box,
+        {
+          sx: {
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            mb: 1
+          },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { variant: "h6", children: plan.name }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(Typography, { variant: "body2", color: "text.secondary", children: [
+              plan.completedSessions,
+              " / ",
+              plan.totalSessions,
+              "회"
+            ] })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        LinearProgress,
+        {
+          variant: "determinate",
+          value: plan.progressPercent,
+          sx: { height: 8, borderRadius: 4, mb: 1 }
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(Typography, { variant: "body2", color: "text.secondary", children: [
+        plan.progressPercent.toFixed(0),
+        "% 완료"
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(CardActions, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(PlanExecutionButton, { plan, size: "small" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { component: Link, to: routes.plans.detail.$path({ id: plan.id }, {}), size: "small", children: "상세보기" })
+    ] })
+  ] });
+}
+export {
+  DashboardPage
+};
+//# sourceMappingURL=index-B3RGRs7S.js.map
