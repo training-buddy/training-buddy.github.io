@@ -1,0 +1,2 @@
+import{r as t}from"./mui-BcCnlGvG.js";import{c as y,p as S,d as m}from"./index-DrA-Uzgl.js";function i(a){const[o,r]=y(),s=o.toString(),e=t.useMemo(()=>S(a,s?`?${s}`:""),[a,s]),u=t.useCallback(c=>{const n=m(a,c);r(n)},[a,r]),p=t.useCallback(c=>{const n={...e,...c},P=m(a,n);r(P)},[a,r,e]);return{queryParams:e,setQueryParams:u,mergeQueryParams:p}}export{i as u};
+//# sourceMappingURL=useTypedSearchParams-BWE1iW7X.js.map
